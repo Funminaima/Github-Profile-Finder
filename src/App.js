@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Navbar from "./Components/Layout/Navbar";
+import Users from "./Components/Users/Users";
+import SearchForm from './Components/Users/SearchForm';
+import Alert from './Components/Layout/Alert';
+import About from './Components/Pages/About';
+import SingleUser from './Components/Users/SingleUser';
+import {Provider} from 'react-redux';
+import store from './redux/Store';
 
 function App() {
+
   return (
+    <Provider store={store}>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar tittle="Github User Finder" icon="fa fa-github"/>
+      
+      {/* wrap users component in a container */}
+      <div className="container">
+        <Switch>
+          <Route path="/" exact>
+            <Alert/>
+            <SearchForm />
+            <Users/>
+          </Route>
+          <Route path="/about">
+            <About/>
+          </Route>
+          <Route path="/user/:login">
+            <SingleUser 
+            />
+          </Route>
+        </Switch>
+      
+      </div>
+      
     </div>
+    </Provider>
   );
 }
+
+
 
 export default App;
